@@ -26,7 +26,7 @@ export class NewMomentComponent implements OnInit {
 
     // tood
 
-    await this.momentService.createMoment(formData).subscribe();
+    await this.momentService.createMoment(formData).subscribe()
 
     // exibir msg
 
