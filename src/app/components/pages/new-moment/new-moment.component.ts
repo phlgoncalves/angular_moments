@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Moment } from 'src/app/Moments';
+import { MessagesService } from 'src/app/services/messages.service';
 import { MomentService } from 'src/app/services/moment.service';
 
 @Component({
@@ -9,12 +11,16 @@ import { MomentService } from 'src/app/services/moment.service';
 })
 export class NewMomentComponent implements OnInit {
   btnText = "Compartilhar"
-  constructor(private momentService: MomentService) { }
+  constructor(
+    private momentService: MomentService,
+    private messagesService: MessagesService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
-  async createHandles(moment: Moment) {
+  async createHandler(moment: Moment) {
     const formData = new FormData()
 
     formData.append("title", moment.title)
@@ -24,13 +30,14 @@ export class NewMomentComponent implements OnInit {
       formData.append('image', moment.image)
     }
 
-    // tood
-
+    // todo
     await this.momentService.createMoment(formData).subscribe()
 
     // exibir msg
+    this.messagesService.add('Momendo adicionado com sucesso!')
 
     // redirect
+    this.router.navigate(['/'])
   }
 
 }
